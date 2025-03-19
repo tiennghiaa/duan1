@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f8f8f8;
+}
+/* Định dạng chung cho phần content */
+.content {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Tiêu đề chính */
+.content h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Tiêu đề phụ */
+.content h3 {
+    font-size: 22px;
+    color: #555;
+    margin-top: 20px;
+    border-left: 5px solid #ff9900;
+    padding-left: 10px;
+}
+
+/* Đoạn văn bản */
+.content p {
+    font-size: 16px;
+    color: #666;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+/* Danh sách với icon ✔ */
+.content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.content ul li {
+    font-size: 16px;
+    margin: 5px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #444;
+}
+
+.content ul li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: #ff9900;
+    font-weight: bold;
+}
+
+/* Liên kết */
+.content a {
+    color: #ff9900;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.content a:hover {
+    text-decoration: underline;
+}
+
+/* Ảnh cửa hàng */
+.content img {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hiệu ứng hover cho toàn bộ phần content */
+.content:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease-in-out;
+}
+	
+</style>
+<body>
+	<!-- about.html -->
+<div th:fragment="content">
+    <h2>Giới Thiệu Về Cửa Hàng Thời Trang</h2>
+    <p>
+        Chào mừng bạn đến với <strong>Shop Đi Động XYZ</strong> - 
+    </p>
+
+    <h3>Về Chúng Tôi</h3>
+    <p>
+        Với sứ mệnh giúp khách hàng tự tin thể hiện phong cách cá nhân, chúng tôi luôn cập nhật những bộ sưu tập thời trang mới nhất từ các thương hiệu nổi tiếng.
+        . Bạn sẽ tìm thấy mọi thứ tại cửa hàng của chúng tôi.
+    </p>
+
+    <h3>Tại sao chọn chúng tôi?</h3>
+    <ul>
+        <li>🔥 Sản phẩm chất lượng, giá cả hợp lý.</li>
+        <li>🆕 Cập nhật mẫu mã liên tục, bắt kịp xu hướng.</li>
+        <li>🚀 Giao hàng nhanh chóng trên toàn quốc.</li>
+        <li>💯 Chính sách đổi trả dễ dàng, đảm bảo quyền lợi khách hàng.</li>
+    </ul>
+
+    <h3>Liên Hệ Với Chúng Tôi</h3>
+    <p>
+        📍 Địa chỉ: 123 Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh<br>
+        📞 Hotline: 0987 654 321<br>
+        ✉ Email: support@shopxyz.vn<br>
+        🌐 Website: <a href="#">www.shopxyz.vn</a>
+    </p>
+
+    <h3>Hình ảnh cửa hàng</h3>
+    <img src="/images/logoASM.jpg" alt="Cửa hàng thời trang" style="width:100%; border-radius:10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);">
+</div>
+
+</body>
+</html>

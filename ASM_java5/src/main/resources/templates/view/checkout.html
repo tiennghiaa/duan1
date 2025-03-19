@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Thanh Toán</title>
+    <link rel="stylesheet" href="/css/thanhtoan.css">
+    <script>
+        function handlePayment(event) {
+            event.preventDefault(); // Ngăn form gửi đi ngay lập tức
+
+            // Giả lập quá trình thanh toán thành công
+            setTimeout(() => {
+                alert("Thanh toán thành công! Cảm ơn bạn đã mua hàng.");
+                window.location.href = "/home/index"; // Chuyển hướng về trang chủ
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+ 
+<div class="checkout-container">
+    <h2>THÔNG TIN GIAO HÀNG</h2>
+    <form id="checkout-form" action="/order/confirm" method="post" onsubmit="handlePayment(event)">
+        <div class="checkout-form">
+            <label>Họ và Tên:</label>
+            <input type="text" name="fullName" required>
+
+            <label>Email:</label>
+            <input type="email" name="email" required>
+
+            <label>Số điện thoại:</label>
+            <input type="tel" name="phone" required>
+
+            <label>Địa chỉ:</label>
+            <input type="text" name="address" required>
+        </div>
+
+        <h3>PHƯƠNG THỨC THANH TOÁN</h3>
+        <div class="payment-method">
+            <label><input type="radio" name="payment" value="cod" checked> Thanh toán khi nhận hàng (COD)</label>
+            <label><input type="radio" name="payment" value="bank"> Chuyển khoản ngân hàng</label>
+        </div>
+
+        <h3>CHI TIẾT ĐƠN HÀNG</h3>
+        <div class="order-summary">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hình ảnh</th>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${gioHang}">
+                        <td><img th:src="${item.image}" alt="Ảnh sản phẩm" class="product-img"></td>
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + 'đ'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Tổng cộng: <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 0, 'POINT')} + ' đ'"></span></h3>
+        <button type="submit" class="checkout-btn">HOÀN TẤT ĐƠN HÀNG</button>
+    </form>
+</div>
+
+</body>
+</html>

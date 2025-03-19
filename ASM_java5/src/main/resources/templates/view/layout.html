@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPT Polytechnic</title>
+    
+</head>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f8f8f8;
+}
+footer{
+    border-top:5px double orangered;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    line-height: 50px;
+    text-align: center;
+    font-size: 26px;
+    
+}
+footer {
+   
+    color:black; /* Màu chữ trắng */
+    padding: 40px 0; /* Tăng padding để làm footer lớn hơn */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Thêm padding ngang */
+}
+
+.footer-section {
+    flex: 1;
+    padding: 20px;
+    min-width: 250px; /* Tăng chiều rộng tối thiểu */
+}
+
+.footer-section h4 {
+    font-size: 20px; /* Tăng kích thước font tiêu đề */
+    margin-bottom: 20px;
+}
+
+.footer-section p,
+.footer-section ul {
+    font-size: 16px; /* Tăng kích thước font */
+    line-height: 1.8; /* Tăng khoảng cách giữa các dòng */
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 15px; /* Tăng khoảng cách giữa các mục */
+}
+
+.footer-section ul li a {
+    color: #ddd; /* Màu chữ nhạt hơn để dịu mắt */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ff9900; /* Màu chữ khi hover */
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 15px; /* Tăng khoảng cách giữa các biểu tượng */
+}
+
+.social-icons a img {
+    width: 100px; /* Tăng kích thước biểu tượng */
+    height: 100px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid #555; /* Đường viền trên tối hơn */
+    margin-top: 40px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 16px; /* Tăng kích thước font */
+    color: #bbb; /* Màu chữ xám nhạt */
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #f0a500;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons a img {
+    width: 40px;
+    height: 40px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #444;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 14px;
+}
+</style>
+<body>
+    <!-- Header & Menu -->
+    <header class="header">
+        
+        <nav th:replace="~{/view/menu}">MENU</nav>
+    </header>
+
+    <!-- Nội dung động -->
+    <main class="content">
+        <article th:replace="${content}">CONTENT</article>
+    </main>
+
+    <footer>
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h4>Thông tin công ty</h4>
+                    <p>Công ty ABC là một trong những công ty hàng đầu về dịch vụ và sản phẩm chất lượng cao.</p>
+                    <p>Địa chỉ: 123 Đường ABC, Quận 1, TP. Hồ Chí Minh</p>
+                    <p>Điện thoại: (84) 123 456 789</p>
+                    <p>Email: contact@company.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Theo dõi chúng tôi</h4>
+                    <div class="social-icons">
+                        <a href="#"><img src="/images/facebook.jpg" alt="Facebook"></a>
+                        <a href="#"><img src="/images/twitter.png" alt="Twitter"></a>
+                        <a href="#"><img src="/images/instagram.jpg" alt="Instagram"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Công ty ABC. All rights reserved.</p>
+            </div>
+        </footer>
+</body>
+</html>	

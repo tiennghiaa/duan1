@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi Tiết Sản Phẩm</title>
+<link rel="stylesheet" href="/css/sanpham.css">
+</head>
+<body>
+	<section class="product-detail">
+		<div class="product-image">
+			<img th:src="${sanpham.image}" th:alt="${sanpham.name}">
+		</div>
+		<div class="product-info">
+			<h2 th:text="${sanpham.name}"></h2>
+			<p class="price"
+				th:text="${#numbers.formatInteger(sanpham.price, 3, 'POINT')} + 'đ'"></p>
+			<p>Mô tả sản phẩm đang cập nhật...</p>
+
+			<!-- Chọn size -->
+			<label>Chọn Size:</label>
+			<div>
+				<button type="button" class="size-btn" data-size="128G">128G</button>
+				<button type="button" class="size-btn" data-size="256G">256G</button>
+				<button type="button" class="size-btn" data-size="512G">512G</button>
+				<button type="button" class="size-btn" data-size="XL">1TB</button>
+			</div>
+
+			<!-- Form thêm vào giỏ hàng -->
+			<form action="/cart/add" method="post">
+				<input type="hidden" name="name" th:value="${sanpham.name}">
+				<input type="hidden" name="price" th:value="${sanpham.price}">
+				<input type="hidden" name="image" th:value="${sanpham.image}">
+				<input type="hidden" name="size" id="selectedSize" value=""> <!-- Giá trị size sẽ được cập nhật -->
+				
+				<div class="button-container">
+					<button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
+					<button type="submit" class="buy-now">Mua ngay</button>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<script>
+		document.querySelectorAll(".size-btn").forEach(button => {
+			button.addEventListener("click", function () {
+				// Bỏ chọn tất cả nút trước đó
+				document.querySelectorAll(".size-btn").forEach(btn => btn.classList.remove("selected"));
+				// Chọn size mới
+				this.classList.add("selected");
+				// Cập nhật giá trị vào input ẩn
+				document.getElementById("selectedSize").value = this.dataset.size;
+			});
+		});
+	</script>
+
+</body>
+</html>

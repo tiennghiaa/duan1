@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            max-width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quản lý Người Dùng & Sản Phẩm</h1>
+
+    <!-- Quản lý Người Dùng -->
+    <section>
+        <h2>Quản lý Người Dùng</h2>
+        <form id="userForm">
+            <input type="hidden" id="userId">
+            <input type="text" id="userName" placeholder="Tên người dùng" required>
+            <input type="email" id="userEmail" placeholder="Email" required>
+            <button type="submit">Lưu</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+    </section>
+
+    <!-- Quản lý Sản Phẩm -->
+    <section>
+        <h2>Quản lý Sản Phẩm</h2>
+        <form id="productForm">
+            <input type="hidden" id="productId">
+            <input type="text" id="productName" placeholder="Tên sản phẩm" required>
+            <input type="number" id="productPrice" placeholder="Giá" required>
+            <select id="productSize">
+                <option value="">Chọn Size</option>
+                <option value="128G">128G</option>
+                <option value="256G">256G</option>
+                <option value="512G">512G</option>
+                <option value="1T">1T</option>
+            </select>
+            <input type="file" id="productImage" accept="image/*">
+            <button type="submit">Lưu</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Size</th>
+                    <th>Ảnh</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="productList"></tbody>
+        </table>
+    </section>
+
+    <script>
+        // Khởi tạo dữ liệu nếu chưa có
+        function initData() {
+            if (!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify([]));
+            if (!localStorage.getItem('products')) localStorage.setItem('products', JSON.stringify([]));
+        }
+
+        // Load danh sách người dùng
+        function loadUsers() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            document.getElementById('userList').innerHTML = users.map((user, index) => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <button onclick="editUser(${index})">Sửa</button>
+                        <button onclick="deleteUser(${index})">Xóa</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Load danh sách sản phẩm
+        function loadProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            document.getElementById('productList').innerHTML = products.map((product, index) => `
+                <tr>
+                    <td>${product.name}</td>
+                    <td>${Number(product.price).toLocaleString()}đ</td>
+                    <td>${product.size || "Không có"}</td>
+                    <td>${product.image ? `<img src="${product.image}" width="50">` : "Không có ảnh"}</td>
+                    <td>
+                        <button onclick="editProduct(${index})">Sửa</button>
+                        <button onclick="deleteProduct(${index})">Xóa</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Thêm/Sửa người dùng
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const id = document.getElementById('userId').value;
+            const user = {
+                name: document.getElementById('userName').value,
+                email: document.getElementById('userEmail').value
+            };
+            if (id !== '') users[id] = user;
+            else users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+            this.reset();
+            loadUsers();
+        });
+
+        // Thêm/Sửa sản phẩm
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const id = document.getElementById('productId').value;
+            const fileInput = document.getElementById('productImage');
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const product = {
+                    name: document.getElementById('productName').value,
+                    price: document.getElementById('productPrice').value,
+                    size: document.getElementById('productSize').value,
+                    image: event.target.result // Lưu ảnh dưới dạng base64
+                };
+                if (id !== '') products[id] = product;
+                else products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+                document.getElementById('productForm').reset();
+                loadProducts();
+            };
+
+            if (fileInput.files.length > 0) {
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                const product = {
+                    name: document.getElementById('productName').value,
+                    price: document.getElementById('productPrice').value,
+                    size: document.getElementById('productSize').value,
+                    image: ""
+                };
+                if (id !== '') products[id] = product;
+                else products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+                this.reset();
+                loadProducts();
+            }
+        });
+
+        // Chỉnh sửa người dùng
+        function editUser(index) {
+            const users = JSON.parse(localStorage.getItem('users'));
+            document.getElementById('userId').value = index;
+            document.getElementById('userName').value = users[index].name;
+            document.getElementById('userEmail').value = users[index].email;
+        }
+
+        // Xóa người dùng
+        function deleteUser(index) {
+            const users = JSON.parse(localStorage.getItem('users'));
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
+        }
+
+        // Chỉnh sửa sản phẩm
+        function editProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products'));
+            document.getElementById('productId').value = index;
+            document.getElementById('productName').value = products[index].name;
+            document.getElementById('productPrice').value = products[index].price;
+            document.getElementById('productSize').value = products[index].size;
+        }
+
+        // Xóa sản phẩm
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products'));
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
+        initData();
+        loadUsers();
+        loadProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+/* Header chính */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 60px;
+}
+
+/* Logo */
+.logo {
+    width: 60px;
+    height: auto;
+    margin-right: 20px;
+}
+
+/* Dùng flexbox để menu nằm giữa */
+.menu-container {
+    flex-grow: 1; /* Cho phép nó chiếm phần giữa */
+    display: flex;
+    justify-content: center; /* Canh giữa menu */
+}
+
+/* Menu */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: 0.3s;
+}
+
+.nav-menu li a:hover {
+    background-color: #ff6600;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Bọc chung */
+.language-selector {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    position: relative;
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Ẩn menu con mặc định */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 220px;
+    z-index: 10;
+}
+
+/* Các mục trong dropdown */
+.dropdown-menu li {
+    padding: 10px 15px;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    transition: 0.3s;
+}
+
+/* Hover đổi màu */
+.dropdown-menu li a:hover {
+    background: #ff6600;
+    color: white;
+}
+
+/* Hiển thị menu khi rê chuột vào "Cá nhân" */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Button "Cá nhân" */
+.dropdown-btn {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Hover vào "Cá nhân" đổi màu */
+.dropdown-btn:hover {
+    color: #ff6600;
+}
+
+
+.language-selector a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.language-selector a:hover {
+    color: #ff6600;
+}

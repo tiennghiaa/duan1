@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+   <header class="header">
+    <!-- Logo bên trái -->
+    <img src="/images/logoASM.jpg" alt="Logo" class="logo">
+    
+    <!-- Menu nằm ở giữa -->
+    <div class="menu-container">
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="/home/index" th:text="#{menu.home}">Trang chủ</a></li>
+                <li><a href="/home/about" th:text="#{menu.about}">Giới thiệu</a></li>
+                <li><a href="/home/sanpham" th:text="#{menu.sanpham}">Sản phẩm</a></li>
+                <li><a href="/home/contact" th:text="#{menu.lienhe}">Liên hệ</a></li>
+                <li><a href="/cart" th:text="#{menu.giohang}">Giỏ hàng</a></li>
+                <li><a href="/home/admin" th:text="#{menu.admin}">Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Phần đăng nhập + ngôn ngữ -->
+<div class="language-selector">
+    <a href="/home/login" th:text="#{menu.login}">Đăng nhập</a>
+    <a href="/home/register" th:text="#{menu.register}">Đăng kí</a>
+
+    <!-- Dropdown cho Cá nhân -->
+    <div class="dropdown">
+        <a href="/home/canhan" class="dropdown-btn" th:text="#{menu.canhan}">Cá nhân ▼</a>
+        <ul class="dropdown-menu">
+            <li><a href="/home/chinhsua" th:text="#{menu.chinhsua}">Chỉnh sửa thông tin cá nhân</a></li>
+            <li><a href="/home/doimatkhau" th:text="#{menu.doimatkhau}">Đổi mật khẩu</a></li>
+            <li><a href="/home/donhang" th:text="#{menu.donhang}">Đơn hàng đã đặt</a></li>
+            <li><a href="/home/sanphamdamua" th:text="#{menu.sanphamdamua}">Sản phẩm đã mua</a></li>
+        </ul>
+    </div>
+
+    <a href="/home/index?lang=vi">Tiếng Việt</a> |
+    <a href="/home/index?lang=en">English</a>
+</div>
+
+</header>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" th:href="@{/css/dangnhapdangki.css}">
+</head>
+<body>
+    <section class="auth-container">
+    <div class="form-box">
+        <h2>Đăng Ký</h2>
+        <form id="registerForm" th:action="@{/register}" method="post">
+            <div class="form-group">
+                <label for="fullname">Họ và Tên:</label>
+                <input type="text" id="fullname" name="fullname" required placeholder="Nhập họ và tên">
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Ngày Sinh:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Nhập email của bạn">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" name="password" required placeholder="Nhập mật khẩu">
+            </div>
+
+            <button type="submit" class="btn">Đăng Ký</button>
+        </form>
+
+        <div class="extra-links">
+            <a href="/home/login">🔹 Đã có tài khoản? Đăng nhập</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        // Ngăn chặn form submit mặc định
+        event.preventDefault();
+
+        // Lấy giá trị từ các trường input
+        const fullname = document.getElementById('fullname').value;
+        const dob = document.getElementById('dob').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Tạo một đối tượng chứa thông tin đăng ký
+        const userInfo = {
+            fullname: fullname,
+            dob: dob,
+            email: email,
+            password: password
+        };
+
+        // Lưu thông tin vào Local Storage
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+        // Thông báo cho người dùng
+        alert('Đăng ký thành công!');
+
+        // Reset form sau khi đăng ký
+        this.reset();
+    });
+</script>
+
+</body>
+</html>

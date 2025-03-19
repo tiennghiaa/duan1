@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng Của Bạn</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .cart-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-img img {
+            width: 80px;
+            border-radius: 5px;
+        }
+        .cart-info {
+            flex-grow: 1;
+            padding: 0 15px;
+        }
+        .cart-price, .cart-total {
+            color: red;
+            font-weight: bold;
+        }
+        .cart-summary {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .checkout-btn {
+            background: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="cart-container">
+    <h2>GIỎ HÀNG CỦA BẠN</h2>
+    <p>Bạn đang có <span th:text="${gioHang.size()}"></span> sản phẩm trong giỏ hàng</p>
+
+    <div class="cart-items">
+        <div class="cart-item" th:each="item : ${gioHang}" 
+             th:data-name="${item.name}" th:data-size="${item.size}" 
+             th:data-price="${item.price}">
+            <div class="cart-img">
+                <img th:src="${item.image}" alt="Hình ảnh sản phẩm">
+            </div>
+            <div class="cart-info">
+                <p class="cart-name" th:text="${item.name}"></p>
+                <p class="cart-size" th:text="'Size: ' + ${item.size}"></p>
+                <div class="cart-quantity">
+                    <button class="btn-minus">-</button>
+                    <span class="quantity-value" th:text="${item.quantity}"></span>
+                    <button class="btn-plus">+</button>
+                </div>
+                <p class="cart-price" th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></p>
+            </div>
+            <p class="cart-total" th:text="${#numbers.formatDecimal(item.price * item.quantity, 0, 'COMMA', 0, 'POINT')} + ' đ'"></p>
+            <button class="delete-btn">🗑</button>
+        </div>
+    </div>
+
+    <div class="cart-summary">
+        <h3>Thông tin đơn hàng</h3>
+        <p>Tổng tiền: <strong id="tongTien" th:text="${totalPrice} + ' đ'"></strong></p>
+        <form action="/checkout" method="post">
+            <button type="submit" class="checkout-btn">THANH TOÁN</button>
+        </form>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    function updateTotal() {
+        let total = 0;
+        $(".cart-item").each(function() {
+            let price = parseInt($(this).data("price"));
+            let quantity = parseInt($(this).find(".quantity-value").text());
+            let itemTotal = price * quantity;
+            $(this).find(".cart-total").text(itemTotal.toLocaleString() + " đ");
+            total += itemTotal;
+        });
+        $("#tongTien").text(total.toLocaleString() + " đ");
+    }
+    
+    $(".btn-plus").click(function() {
+        let parent = $(this).closest(".cart-item");
+        let quantityElement = parent.find(".quantity-value");
+        let quantity = parseInt(quantityElement.text()) + 1;
+        quantityElement.text(quantity);
+        updateTotal();
+    });
+    
+    $(".btn-minus").click(function() {
+        let parent = $(this).closest(".cart-item");
+        let quantityElement = parent.find(".quantity-value");
+        let quantity = Math.max(1, parseInt(quantityElement.text()) - 1);
+        quantityElement.text(quantity);
+        updateTotal();
+    });
+    
+    $(".delete-btn").click(function() {
+        let parent = $(this).closest(".cart-item");
+        parent.remove();
+        updateTotal();
+    });
+});
+</script>
+</body>
+</html>
